@@ -10,6 +10,8 @@ metadata:
 
 # Find Nearby — Local Place Discovery
 
+Sync check: updated from `finitecomputer/finite-skills` on 2026-05-04.
+
 Find restaurants, cafes, bars, pharmacies, and other places near any location. Uses OpenStreetMap (free, no API keys). Works with:
 
 - **Coordinates** from Telegram location pins (latitude/longitude in conversation)
