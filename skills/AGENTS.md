@@ -8,6 +8,9 @@ skills.
 - Every Finite-managed skill must use a `-finite` suffix in both:
   - the directory name
   - the `name:` field in `SKILL.md`
+- Exception: `grill-me` intentionally ships under its canonical upstream name
+  and path so the local skill invocation and the managed baseline refer to the
+  same skill contract.
 - Do not add Finite-managed skills with names that could collide with Hermes
   built-in or user-local skills under `~/.hermes/skills`.
 - If a Finite-managed skill references another Finite-managed skill, use the
