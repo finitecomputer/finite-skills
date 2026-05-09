@@ -24,6 +24,9 @@ skills.
 ## Ownership
 
 - This tree is platform-owned and shipped through the runtime baseline.
+- Add or edit shared skill bodies in this repo first. The `finitecomputer` repo
+  should only reference them through `nix/agent-runtime/skills/registry.json`
+  and runtime guidance.
 - Hermes-local/user-created skills under `~/.hermes/skills` are not managed
   here and should not be rewritten or pruned by platform tooling.
 - Treat this tree as a read-only baseline and reference library, not as the
