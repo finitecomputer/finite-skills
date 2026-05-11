@@ -1,6 +1,6 @@
 ---
 name: git-finite
-description: Use when the user wants to create, clone, inspect, or push private repos on Finite's built-in Git host, collaborate through the shared-skills repo, or hand an outside developer an HTTPS clone URL plus token-based access.
+description: Use when the user wants to create, clone, inspect, share, or push private repos on Finite's built-in Git host, or hand an outside developer an HTTPS clone URL plus token-based access.
 ---
 
 # Git on Finite
@@ -13,7 +13,7 @@ Use this skill for the Finite Git host and shared Git collaboration. Prefer `fin
 - The machine-local Git identity and token are already injected into `~/.hermes/.env` when the machine has Git access.
 - `finitec repo` is the supported wrapper for machine-owned repo operations.
 - Raw Git over HTTPS is still the underlying transport. `finitec repo git` injects the machine's HTTPS auth header for you.
-- `~/shared-skills/skills` is a Hermes discovery path, not a place Hermes writes to automatically.
+- Shared/team skills use the `shared-skills-finite` skill. This skill covers the lower-level Git host commands.
 
 ## Core workflow
 
@@ -39,10 +39,7 @@ Repos are empty by default so the first clone and push stay predictable.
 finitec repo clone --name notes-app
 ```
 
-Default destinations:
-
-- `~/shared-skills` for `shared-skills`
-- `~/dev/REPO_NAME` for other repos
+Default destination: `~/dev/REPO_NAME`
 
 ### Work with normal Git commands
 
@@ -60,24 +57,11 @@ git -C ~/dev/notes-app config user.name "$FC_GITEA_USERNAME"
 git -C ~/dev/notes-app config user.email "${FC_GITEA_USERNAME}@gitea.local.invalid"
 ```
 
-## Shared skills
+## Shared Skills
 
-To create or recover the machine's shared-skills repo:
-
-```bash
-finitec repo bootstrap-shared-skills
-```
-
-Then edit skills under `~/shared-skills/skills`, validate them locally, and push through Git:
-
-```bash
-finitec repo git -- -C ~/shared-skills status --short
-finitec repo git -- -C ~/shared-skills add skills/my-shared-skill
-finitec repo git -- -C ~/shared-skills commit -m "Add my-shared-skill"
-finitec repo git -- -C ~/shared-skills push -u origin HEAD:main
-```
-
-The runtime clones or pulls `~/shared-skills` on boot when `FC_SHARED_SKILLS_GIT_URL` is present.
+If the human is trying to publish, update, pull, or install a team-shared Hermes
+skill, use `shared-skills-finite` instead of this lower-level Git workflow. The
+old `finitec repo bootstrap-shared-skills` and `~/shared-skills` flow is retired.
 
 ## Repo permissions
 
