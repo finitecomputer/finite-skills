@@ -66,6 +66,8 @@ failed.
 Run provider calls from the terminal with a heredoc after sourcing `.env`.
 Do not use `execute_code` for provider calls: it runs in an isolated Python
 process that may not inherit the sourced Hermes environment.
+Do not use `curl -v` or print Authorization headers; verbose HTTP debugging
+can expose MicroSandbox placeholders to the model transcript.
 
 If both `FAL_KEY`/`FAL_API_KEY` and `ELEVENLABS_API_KEY` are missing, explain
 that music generation is not configured for this machine.

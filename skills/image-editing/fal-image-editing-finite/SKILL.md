@@ -24,6 +24,8 @@ verification, or copy the placeholder into workaround exports.
 - Run provider calls from the terminal with a heredoc after sourcing `.env`.
   Do not use `execute_code` for provider calls: it runs in an isolated Python
   process that may not inherit the sourced Hermes environment.
+  Do not use `curl -v` or print Authorization headers; verbose HTTP debugging
+  can expose MicroSandbox placeholders to the model transcript.
 - `uv pip install --python ~/.hermes/venv/bin/python fal-client Pillow`
 - Run scripts with `~/.hermes/venv/bin/python`
 
