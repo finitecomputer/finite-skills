@@ -15,10 +15,12 @@ triggers:
 - fal_client needs `FAL_KEY` env var. The env may have it as `FAL_KEY` or `FAL_API_KEY` depending on context, and terminal subprocesses may not inherit it. Use this robust pattern at the top of every script:
 ```python
 import os
-if "FAL_KEY" not in os.environ:
+if not os.environ.get("FAL_KEY"):
     os.environ["FAL_KEY"] = os.environ.get("FAL_API_KEY", "")
 ```
-If that still fails, hardcode from `grep FAL ~/.hermes/.env` and pass via `export FAL_KEY=... && ~/.hermes/venv/bin/python script.py`
+If the value starts with `$MSB_`, that is the expected MicroSandbox placeholder.
+Use it directly; do not grep env files for raw shared keys, disable TLS
+verification, or copy the placeholder into workaround exports.
 - `uv pip install --python ~/.hermes/venv/bin/python fal-client Pillow`
 - Run scripts with `~/.hermes/venv/bin/python`
 
