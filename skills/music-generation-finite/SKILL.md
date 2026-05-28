@@ -45,8 +45,26 @@ set -a
 set +a
 ```
 
-If both `FAL_KEY` and `ELEVENLABS_API_KEY` are missing, explain that music
-generation is not configured for this machine.
+`fal-client` reads `FAL_KEY`. Some Finite runtimes also expose the same FAL
+credential as `FAL_API_KEY`; normalize that in-process before importing or
+calling `fal_client`:
+
+```python
+import os
+
+if not os.environ.get("FAL_KEY"):
+    os.environ["FAL_KEY"] = os.environ.get("FAL_API_KEY", "")
+```
+
+In MicroSandbox runtimes, shared provider keys may appear as `$MSB_...`
+placeholders. That is expected. Use the documented env var directly with the
+provider SDK or API request. Do not inspect `MSB_*`, grep env files for raw
+shared keys, disable TLS verification, or copy placeholders into workaround
+exports. If provider auth fails, report the provider, env var, and host that
+failed.
+
+If both `FAL_KEY`/`FAL_API_KEY` and `ELEVENLABS_API_KEY` are missing, explain
+that music generation is not configured for this machine.
 
 ## FAL MiniMax Music
 
@@ -69,7 +87,11 @@ Generate:
 
 ```python
 import pathlib
+import os
 import urllib.request
+
+if not os.environ.get("FAL_KEY"):
+    os.environ["FAL_KEY"] = os.environ.get("FAL_API_KEY", "")
 
 import fal_client
 
