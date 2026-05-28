@@ -21,6 +21,9 @@ if not os.environ.get("FAL_KEY"):
 If the value starts with `$MSB_`, that is the expected MicroSandbox placeholder.
 Use it directly; do not grep env files for raw shared keys, disable TLS
 verification, or copy the placeholder into workaround exports.
+- Run provider calls from the terminal with a heredoc after sourcing `.env`.
+  Do not use `execute_code` for provider calls: it runs in an isolated Python
+  process that may not inherit the sourced Hermes environment.
 - `uv pip install --python ~/.hermes/venv/bin/python fal-client Pillow`
 - Run scripts with `~/.hermes/venv/bin/python`
 

@@ -63,6 +63,10 @@ shared keys, disable TLS verification, or copy placeholders into workaround
 exports. If provider auth fails, report the provider, env var, and host that
 failed.
 
+Run provider calls from the terminal with a heredoc after sourcing `.env`.
+Do not use `execute_code` for provider calls: it runs in an isolated Python
+process that may not inherit the sourced Hermes environment.
+
 If both `FAL_KEY`/`FAL_API_KEY` and `ELEVENLABS_API_KEY` are missing, explain
 that music generation is not configured for this machine.
 
@@ -83,9 +87,15 @@ Install the Python client if needed:
 python -m pip install fal-client
 ```
 
-Generate:
+Generate from the terminal:
 
-```python
+```bash
+set -euo pipefail
+set -a
+[ -f /home/node/.hermes/.env ] && . /home/node/.hermes/.env
+set +a
+
+python <<'PY'
 import pathlib
 import os
 import urllib.request
@@ -123,6 +133,7 @@ audio_url = result["audio"]["url"]
 output = pathlib.Path("minimax-song.mp3")
 urllib.request.urlretrieve(audio_url, output)
 print(output)
+PY
 ```
 
 For instrumental output, omit lyrics and set `is_instrumental: True`.
@@ -137,6 +148,11 @@ Endpoint:
 Quick instrumental generation:
 
 ```bash
+set -euo pipefail
+set -a
+[ -f /home/node/.hermes/.env ] && . /home/node/.hermes/.env
+set +a
+
 : "${ELEVENLABS_API_KEY:?ELEVENLABS_API_KEY is not configured}"
 
 prompt='A short upbeat instrumental jingle for an AI agent workshop, warm synths, no vocals'
