@@ -27,7 +27,7 @@ Do not treat the brief as the only truth. Show the raw source URLs and inspect k
 Raw search results as JSON:
 
 ```bash
-python3 /profile-assets/hermes-local/managed-skills/research/perplexity-research-finite/scripts/perplexity_research.py search \
+python3 ~/.finite/managed-skills/finite/current/research/perplexity-research-finite/scripts/perplexity_research.py search \
   --query "latest SEC crypto enforcement actions" \
   --domain sec.gov \
   --domain law360.com \
@@ -38,7 +38,7 @@ python3 /profile-assets/hermes-local/managed-skills/research/perplexity-research
 Preferred quick human-readable search output:
 
 ```bash
-python3 /profile-assets/hermes-local/managed-skills/research/perplexity-research-finite/scripts/perplexity_research.py search \
+python3 ~/.finite/managed-skills/finite/current/research/perplexity-research-finite/scripts/perplexity_research.py search \
   --query "OpenAI valuation 2026 funding round" \
   --recency month \
   --max-results 6
@@ -47,7 +47,7 @@ python3 /profile-assets/hermes-local/managed-skills/research/perplexity-research
 Cited brief with URLs:
 
 ```bash
-python3 /profile-assets/hermes-local/managed-skills/research/perplexity-research-finite/scripts/perplexity_research.py brief \
+python3 ~/.finite/managed-skills/finite/current/research/perplexity-research-finite/scripts/perplexity_research.py brief \
   --query "What changed in recent SEC crypto enforcement this year?" \
   --domain sec.gov \
   --recency year
@@ -56,7 +56,7 @@ python3 /profile-assets/hermes-local/managed-skills/research/perplexity-research
 Fetch the exact source text for a chosen URL:
 
 ```bash
-python3 /profile-assets/hermes-local/managed-skills/research/perplexity-research-finite/scripts/perplexity_research.py fetch \
+python3 ~/.finite/managed-skills/finite/current/research/perplexity-research-finite/scripts/perplexity_research.py fetch \
   --url "https://www.sec.gov/news/press-release/example"
 ```
 

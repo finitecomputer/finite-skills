@@ -40,7 +40,7 @@ skills.
 - If you want to customize a Finite-managed skill for one machine, copy it into
   `~/.hermes/skills/...` and edit the local copy there.
 - Do not edit the mounted managed copy in place under
-  `/profile-assets/hermes-local/managed-skills/...`.
+  `~/.finite/managed-skills/finite/current/...`.
 - Prefer giving the local copy a new name while experimenting so you can still
   compare it against the shipped baseline.
 - Only shadow the managed skill with the same name when you intentionally want

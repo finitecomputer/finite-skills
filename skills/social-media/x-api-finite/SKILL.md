@@ -21,10 +21,10 @@ Requires `X_API_BEARER_TOKEN` in the Hermes environment.
 Use the local helper directly:
 
 ```bash
-python3 /profile-assets/hermes-local/managed-skills/social-media/x-api-finite/x-api.py lookup https://x.com/jack/status/20
-python3 /profile-assets/hermes-local/managed-skills/social-media/x-api-finite/x-api.py search "from:jack nostr" --limit 5
-python3 /profile-assets/hermes-local/managed-skills/social-media/x-api-finite/x-api.py user @jack
-python3 /profile-assets/hermes-local/managed-skills/social-media/x-api-finite/x-api.py conversation https://x.com/jack/status/20 --limit 10
+python3 ~/.finite/managed-skills/finite/current/social-media/x-api-finite/x-api.py lookup https://x.com/jack/status/20
+python3 ~/.finite/managed-skills/finite/current/social-media/x-api-finite/x-api.py search "from:jack nostr" --limit 5
+python3 ~/.finite/managed-skills/finite/current/social-media/x-api-finite/x-api.py user @jack
+python3 ~/.finite/managed-skills/finite/current/social-media/x-api-finite/x-api.py conversation https://x.com/jack/status/20 --limit 10
 ```
 
 ## Workflow

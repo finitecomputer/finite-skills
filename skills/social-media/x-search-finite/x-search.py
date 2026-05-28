@@ -19,30 +19,84 @@ import argparse
 import json
 import os
 import sys
+import urllib.error
+import urllib.request
 from datetime import datetime
+from typing import Any
 
 
-def get_client():
-    from xai_sdk import Client
-
+def get_api_key() -> str:
     api_key = os.environ.get("XAI_API_KEY")
     if not api_key:
         print("Error: XAI_API_KEY not set", file=sys.stderr)
         raise SystemExit(1)
-    return Client(api_key=api_key)
+    return api_key
 
 
-def grok_chat(prompt: str, model: str = "grok-4-1-fast", handles: list[str] | None = None) -> str:
+def grok_chat(prompt: str, model: str = "grok-4.3", handles: list[str] | None = None) -> str:
     """Send a prompt to Grok with x_search enabled and return response text."""
-    from xai_sdk.chat import user
-    from xai_sdk.tools import x_search
+    tool: dict[str, Any] = {"type": "x_search"}
+    if handles:
+        tool["allowed_x_handles"] = handles
+    payload = {
+        "model": model,
+        "input": [{"role": "user", "content": prompt}],
+        "tools": [tool],
+    }
+    request = urllib.request.Request(
+        "https://api.x.ai/v1/responses",
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "Authorization": f"Bearer {get_api_key()}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=180) as response:
+            response_payload = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as error:
+        body = error.read().decode("utf-8", errors="replace")
+        print(f"xAI request failed: HTTP {error.code} {body[:1000]}", file=sys.stderr)
+        raise SystemExit(1) from error
+    except urllib.error.URLError as error:
+        print(f"xAI request failed: {error}", file=sys.stderr)
+        raise SystemExit(1) from error
+    return extract_response_text(response_payload)
 
-    client = get_client()
-    tool = x_search(allowed_x_handles=handles) if handles else x_search()
-    chat = client.chat.create(model=model, tools=[tool])
-    chat.append(user(prompt))
-    response = chat.sample()
-    return response.content if hasattr(response, "content") else str(response)
+
+def extract_response_text(payload: dict[str, Any]) -> str:
+    """Extract text and citations from the OpenAI-compatible Responses shape."""
+    if isinstance(payload.get("output_text"), str) and payload["output_text"].strip():
+        text = payload["output_text"].strip()
+    else:
+        parts: list[str] = []
+        for item in payload.get("output", []):
+            if not isinstance(item, dict):
+                continue
+            if isinstance(item.get("content"), str):
+                parts.append(item["content"])
+                continue
+            for content in item.get("content", []):
+                if not isinstance(content, dict):
+                    continue
+                text_value = content.get("text") or content.get("content")
+                if isinstance(text_value, str):
+                    parts.append(text_value)
+        text = "\n".join(part.strip() for part in parts if part.strip())
+
+    citations = []
+    for citation in payload.get("citations", []) or []:
+        if isinstance(citation, str):
+            citations.append(citation)
+        elif isinstance(citation, dict):
+            url = citation.get("url") or citation.get("uri")
+            if url:
+                citations.append(str(url))
+    if citations:
+        text = text.rstrip() + "\n\n## Citations\n" + "\n".join(f"- {url}" for url in citations)
+
+    return text or json.dumps(payload, indent=2)
 
 
 def extract_json(text: str) -> dict | None:

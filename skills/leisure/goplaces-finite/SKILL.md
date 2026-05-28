@@ -30,13 +30,13 @@ GOOGLE_PLACES_API_KEY=...
 Search:
 
 ```bash
-python /profile-assets/hermes-local/managed-skills/leisure/goplaces-finite/scripts/google_places.py search --query "best coffee shops in austin"
+python ~/.finite/managed-skills/finite/current/leisure/goplaces-finite/scripts/google_places.py search --query "best coffee shops in austin"
 ```
 
 Place details:
 
 ```bash
-python /profile-assets/hermes-local/managed-skills/leisure/goplaces-finite/scripts/google_places.py details --place-id ChIJ...
+python ~/.finite/managed-skills/finite/current/leisure/goplaces-finite/scripts/google_places.py details --place-id ChIJ...
 ```
 
 ## Common Patterns
@@ -44,25 +44,25 @@ python /profile-assets/hermes-local/managed-skills/leisure/goplaces-finite/scrip
 ### Text Search
 
 ```bash
-python /profile-assets/hermes-local/managed-skills/leisure/goplaces-finite/scripts/google_places.py search   --query "best sushi near downtown Austin"   --max-results 5
+python ~/.finite/managed-skills/finite/current/leisure/goplaces-finite/scripts/google_places.py search   --query "best sushi near downtown Austin"   --max-results 5
 ```
 
 ### Location-Biased Search
 
 ```bash
-python /profile-assets/hermes-local/managed-skills/leisure/goplaces-finite/scripts/google_places.py search   --query "pharmacy"   --lat 30.2672 --lon -97.7431 --radius-meters 2500
+python ~/.finite/managed-skills/finite/current/leisure/goplaces-finite/scripts/google_places.py search   --query "pharmacy"   --lat 30.2672 --lon -97.7431 --radius-meters 2500
 ```
 
 ### Full JSON Output
 
 ```bash
-python /profile-assets/hermes-local/managed-skills/leisure/goplaces-finite/scripts/google_places.py search   --query "coworking spaces in chicago"   --json
+python ~/.finite/managed-skills/finite/current/leisure/goplaces-finite/scripts/google_places.py search   --query "coworking spaces in chicago"   --json
 ```
 
 ### Place Details
 
 ```bash
-python /profile-assets/hermes-local/managed-skills/leisure/goplaces-finite/scripts/google_places.py details --place-id ChIJN1t_tDeuEmsRUsoyG83frY4
+python ~/.finite/managed-skills/finite/current/leisure/goplaces-finite/scripts/google_places.py details --place-id ChIJN1t_tDeuEmsRUsoyG83frY4
 ```
 
 ## Guidance

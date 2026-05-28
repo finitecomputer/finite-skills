@@ -9,21 +9,20 @@ Search and analyze X/Twitter content using Grok + x_search. Adapted from [OpenUn
 
 ## Setup
 
-Requires `XAI_API_KEY` in the Hermes environment.
-
-The finite runtime bootstraps the required Python dependency into `~/.hermes/venv`:
-
-- `xai-sdk`
+Requires `XAI_API_KEY` in the Hermes environment. The helper uses Python's
+standard library and xAI's HTTP Responses API, so it does not need a separate
+Python SDK install.
 
 ## Commands
 
-Use the local helper directly:
+Use the local helper directly. If `skill_view` shows a `skill_dir`, you can also
+`cd` into that directory and run `python3 x-search.py ...`.
 
 ```bash
-python3 /profile-assets/hermes-local/managed-skills/social-media/x-search-finite/x-search.py search "bitcoin etf" --limit 5
-python3 /profile-assets/hermes-local/managed-skills/social-media/x-search-finite/x-search.py topic "AI regulation" --sides "Pro-regulation|Anti-regulation" --limit 10
-python3 /profile-assets/hermes-local/managed-skills/social-media/x-search-finite/x-search.py account @elonmusk --topics "AI,Bitcoin,Free speech,Mars"
-python3 /profile-assets/hermes-local/managed-skills/social-media/x-search-finite/x-search.py ask @jack "What does he think about Nostr?"
+python3 ~/.finite/managed-skills/finite/current/social-media/x-search-finite/x-search.py search "bitcoin etf" --limit 5
+python3 ~/.finite/managed-skills/finite/current/social-media/x-search-finite/x-search.py topic "AI regulation" --sides "Pro-regulation|Anti-regulation" --limit 10
+python3 ~/.finite/managed-skills/finite/current/social-media/x-search-finite/x-search.py account @elonmusk --topics "AI,Bitcoin,Free speech,Mars"
+python3 ~/.finite/managed-skills/finite/current/social-media/x-search-finite/x-search.py ask @jack "What does he think about Nostr?"
 ```
 
 ## Output
@@ -31,14 +30,14 @@ python3 /profile-assets/hermes-local/managed-skills/social-media/x-search-finite
 All output is markdown. Pipe to a file to save reports:
 
 ```bash
-python3 /profile-assets/hermes-local/managed-skills/social-media/x-search-finite/x-search.py account @jack --topics "Bitcoin,Nostr,Bluesky" > reports/jack-analysis.md
+python3 ~/.finite/managed-skills/finite/current/social-media/x-search-finite/x-search.py account @jack --topics "Bitcoin,Nostr,Bluesky" > reports/jack-analysis.md
 ```
 
 ## How It Works
 
 This skill uses Grok with the built-in `x_search` tool, so it only needs the xAI key and does not require separate X API credentials.
 
-- Model: defaults to `grok-4-1-fast`
+- Model: defaults to `grok-4.3`
 - Only Grok 4+ supports `x_search`
 - Output is citation-heavy markdown intended for saving or synthesis
 
